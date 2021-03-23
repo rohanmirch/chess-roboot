@@ -1,0 +1,5 @@
+int32    joint		# Joint number
+float64  amplitude	# Positive triangle wave amplitude
+float64  period		# Positive triangle wave period
+---
+bool     success	# Indicate successful update

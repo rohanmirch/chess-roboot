@@ -1,0 +1,26 @@
+<launch>
+  <!-- Define general parameters.  These can be overwritten by the
+       roslaunch command line. -->
+  <arg name="model" default="$(find tunecode)/urdf/robot.urdf"/>
+  <arg name="cfg"   default="$(find tunecode)/rviz/viewrobot.rviz" />
+
+
+  <!-- Load the URDF file into the robot_description parameter. -->
+  <param name="robot_description" textfile="$(arg model)"/>
+
+
+  <!-- Start the ROS forward kinematics (the robot_state_publisher). -->
+  <node pkg="robot_state_publisher" type="robot_state_publisher"
+	name="rsp">
+    <param name="ignore_timestamp" value="true"/>
+    <remap from="joint_states" to="/hebiros/robot/feedback/joint_state"/>
+  </node>    
+
+
+  <!-- Run the rviz visualization.  The viewrobot.rviz config file
+       sets up the URDF viewing.  Use a 3Hz frame rate to prevent
+       a VM from overloading. -->
+  <node pkg="rviz" type="rviz" name="rviz" args="-d $(arg cfg)"
+	output="screen"/>
+
+</launch>

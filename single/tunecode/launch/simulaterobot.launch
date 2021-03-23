@@ -1,0 +1,30 @@
+<launch>
+  <!-- Define general parameters.  These can be overwritten by the
+       roslaunch command line. -->
+  <arg name="model" default="$(find tunecode)/urdf/robot.urdf"/>
+
+
+  <!-- Load the URDF file into the robot_description parameter. -->
+  <param name="robot_description" textfile="$(arg model)"/>
+
+
+  <!-- Start a "fake" HEBI node, i.e. a general joint_state publisher.
+       The 'use_gui' argument creates joint position sliders.  -->
+  <node pkg="joint_state_publisher_gui" type="joint_state_publisher_gui"
+	name="jsp_actual">
+    <remap from="joint_states" to="/hebiros/robot/feedback/joint_state"/>
+  </node>
+
+  <!-- INSTEAD of the fake HEBI node, we will eventually use a real
+       hebi_node...  The output="screen" shows the messages.  -->
+  <!--
+  <node pkg="hebiros" type="hebiros_node" name="hebiros_node"
+        output="screen"/>
+  <node pkg="myrobot" type="definerobot" name="definerobot"
+	output="screen"/>
+  -->
+
+
+  <include file="$(find tunecode)/launch/view2robot.launch"/>
+
+</launch>

@@ -1,0 +1,43 @@
+<launch>
+  <!-- Define general parameters.  These can be overwritten by the
+       roslaunch command line. -->
+  <arg name="model" default="$(find tunecode)/urdf/robot.urdf"/>
+  <arg name="cfg"   default="$(find tunecode)/rviz/view2robot.rviz" />
+
+
+  <!-- Load the URDF file into the robot_description parameter. -->
+  <param name="robot_description" textfile="$(arg model)"/>
+
+
+  <!-- Start two ROS forward kinematics (the robot_state_publisher):
+       One for the command, another for the actual joint states. -->
+  <node pkg="robot_state_publisher" type="robot_state_publisher"
+	name="rsp_actual">
+    <param name="tf_prefix" value="actual"/>
+    <param name="ignore_timestamp" value="true"/>
+    <remap from="joint_states" to="/hebiros/robot/feedback/joint_state"/>
+  </node>
+  
+  <node pkg="robot_state_publisher" type="robot_state_publisher"
+	name="rsp_command">
+    <param name="tf_prefix" value="command"/>
+    <param name="ignore_timestamp" value="true"/>
+    <remap from="joint_states" to="/hebiros/robot/command/joint_state"/>
+  </node>    
+
+  <!-- Also create static transforms to attach the now subordinate
+       actual and command worlds to the main world. -->
+  <node pkg="tf" type="static_transform_publisher" name="actual_world"
+	args="0 0 0 0 0 0 world actual/world 100" />
+
+  <node pkg="tf" type="static_transform_publisher" name="command_world"
+	args="0 0 0 0 0 0 world command/world 100" />
+
+
+  <!-- Run the rviz visualization.  The view2robot.rviz config file
+       sets up the URDF for command and actual transforms ( commands
+       are faded).  Use a 3Hz frame rate as not to stress the VMs. -->
+  <node pkg="rviz" type="rviz" name="rviz" args="-d $(arg cfg)"
+	output="screen"/>
+
+</launch>

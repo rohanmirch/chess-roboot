@@ -1,0 +1,280 @@
+<?xml version="1.0"?>
+
+<robot name="robot">
+  
+  <!-- *************************************************** -->
+  <!-- ******************** Kinematics ******************* -->
+  <!-- *************************************************** -->
+  <!-- Note the 'origin' tag in the fixed joints defines the shift and
+       reorientation before the continuous joint rotates around the
+       axis.  For shift distances see below. -->
+
+  <link name="world"/>
+
+
+  <joint name="connect-world-motor0base" type="fixed">
+    <parent link="world"/>
+    <child  link="motor0base"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+
+  <link name="motor0base"/>
+
+  <joint name="Dwarfs/Doc" type="continuous">
+    <parent link="motor0base"/>
+    <child  link="motor0output"/>
+    <axis   xyz="0 0 1"/>
+  </joint>
+
+  <link name="motor0output"> </link>
+
+
+  <joint name="connect-motor0output-motor1base" type="fixed">
+    <parent link="motor0output"/>
+    <child  link="motor1base"/>
+    <origin xyz="0 0.05 0.081" rpy="1.57 0 0"/>
+  </joint>
+
+  <link name="motor1base"/>
+
+  <joint name="Dwarfs/Sleepy" type="continuous">
+    <parent link="motor1base"/>
+    <child  link="motor1output"/>
+    <axis   xyz="0 0 -1"/>
+  </joint>
+
+  <link name="motor1output"> </link>
+
+
+  <joint name="connect-motor1output-motor2base" type="fixed">
+    <parent link="motor1output"/>
+    <child  link="motor2base"/>
+    <origin xyz="0.5 0 0.036" rpy="0 0 0"/>
+  </joint>
+
+  <link name="motor2base"/>
+
+  <joint name="Dwarfs/Grumpy" type="continuous">
+    <parent link="motor2base"/>
+    <child  link="motor2output"/>
+    <axis   xyz="0 0 1"/>
+  </joint>
+
+  <link name="motor2output"> </link>
+
+
+  <joint name="connect-motor2output-tip" type="fixed">
+    <parent link="motor2output"/>
+    <child  link="tip"/>
+    <origin xyz="0.5 0 0.0335" rpy="0 1.57 0"/>
+  </joint>
+
+  <link name="tip"/>
+
+
+  <!-- *************************************************** -->
+  <!-- ********************* Graphics ******************** -->
+  <!-- *************************************************** -->
+  <!-- The following is purely to allow rviz to show something that
+       actually looks like the robot.  -->
+
+  <!-- ******************** Materials ******************** -->
+
+  <material name="white">    <color rgba="1.00 1.00 1.00 1"/>  </material>
+  <material name="gray">     <color rgba="0.60 0.60 0.60 1"/>  </material>
+  <material name="table">    <color rgba="0.85 0.77 0.77 1"/>  </material>
+
+  <material name="hebired">  <color rgba="0.82 0.06 0.06 1"/>  </material>
+
+  <material name="red">      <color rgba="1.00 0.00 0.00 1"/>  </material>
+  <material name="green">    <color rgba="0.00 1.00 0.00 1"/>  </material>
+  <material name="blue">     <color rgba="0.00 0.00 1.00 1"/>  </material>
+
+  <material name="cyan">     <color rgba="0.00 1.00 1.00 1"/>  </material>
+  <material name="magenta">  <color rgba="1.00 0.00 1.00 1"/>  </material>
+  <material name="yellow">   <color rgba="1.00 1.00 0.00 1"/>  </material>
+
+
+  <!-- ********************** Table ********************** -->
+
+  <joint name="connect-world-table" type="fixed">
+    <parent link="world"/>
+    <child  link="table"/>
+  </joint>
+
+  <link name="table">
+    <visual>
+      <origin xyz="0 0 -0.025" rpy="0 0 0"/>
+      <geometry>
+	<box size="0.5 0.5 0.05"/>
+      </geometry>
+      <material name="table"/>
+    </visual>
+  </link>
+
+
+  <!-- ********************** Motors ********************* -->
+
+  <joint name="attach-motor0" type="fixed">
+    <parent link="motor0base"/>
+    <child  link="motor0"/>
+  </joint>
+
+  <link name="motor0">
+    <visual>
+      <geometry>
+        <mesh filename="package://hebiros_description/meshes/x5.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="hebired"/>
+    </visual>
+  </link>
+
+  <joint name="attach-motor1" type="fixed">
+    <parent link="motor1base"/>
+    <child  link="motor1"/>
+  </joint>
+
+  <link name="motor1">
+    <visual>
+      <geometry>
+        <mesh filename="package://hebiros_description/meshes/x5.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="hebired"/>
+    </visual>
+  </link>
+
+  <joint name="attach-motor2" type="fixed">
+    <parent link="motor2base"/>
+    <child  link="motor2"/>
+  </joint>
+
+  <link name="motor2">
+    <visual>
+      <geometry>
+        <mesh filename="package://hebiros_description/meshes/x5.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="hebired"/>
+    </visual>
+  </link>
+
+
+  <!-- **************** Motor 0 - Motor 1 **************** -->
+  <!-- Motor Thickness (0, 0, 0.031) + Shift (0, 0.05, 0.05) -->
+
+  <joint name="connect-motor0output-link1part1" type="fixed">
+    <parent link="motor0output"/>
+    <child  link="link1part1"/>
+  </joint>
+
+  <link name="link1part1">
+    <visual>
+      <origin xyz="0 0.015 0.0335" rpy="0 0 0"/>
+      <geometry>
+	<box size="0.05 0.08 0.005"/>
+      </geometry>
+      <material name="white"/>
+    </visual>
+  </link>
+
+  <joint name="connect-motor0output-link1part2" type="fixed">
+    <parent link="motor0output"/>
+    <child  link="link1part2"/>
+  </joint>
+
+  <link name="link1part2">
+    <visual>
+      <origin xyz="0 0.0525 0.0685" rpy="0 0 0"/>
+      <geometry>
+	<box size="0.05 0.005 0.075"/>
+      </geometry>
+      <material name="white"/>
+    </visual>
+  </link>
+
+
+  <!-- **************** Motor 1 - Motor 2 **************** -->
+  <!-- Motor Thickness (0, 0, 0.031) + Shift (0.5, 0, 0.005) -->
+
+  <joint name="connect-motor1output-link2" type="fixed">
+    <parent link="motor1output"/>
+    <child  link="link2"/>
+  </joint>
+
+  <link name="link2">
+    <visual>
+      <origin xyz="0.25 0 0.0335" rpy="0 0 0"/>
+      <geometry>
+	<box size="0.55 0.05 0.005"/>
+      </geometry>
+      <material name="white"/>
+    </visual>
+  </link>
+
+
+  <!-- ****************** Motor 2 - Tip ****************** -->
+  <!-- Motor Thickness (0, 0, 0.031) + Shift (0.5, 0, 0.0025) -->
+
+  <joint name="connect-motor2output-link3" type="fixed">
+    <parent link="motor2output"/>
+    <child  link="link3"/>
+  </joint>
+
+  <link name="link3">
+    <visual>
+      <origin xyz="0.225 0 0.0335" rpy="0 0 0"/>
+      <geometry>
+	<box size="0.5 0.05 0.005"/>
+      </geometry>
+      <material name="white"/>
+    </visual>
+  </link>
+
+
+  <!-- ********************* Gripper ********************* -->
+
+  <joint name="connect-tip-palm" type="fixed">
+    <parent link="tip"/>
+    <child  link="palm"/>
+  </joint>
+
+  <joint name="connect-tip-leftfinger" type="fixed">
+    <parent link="tip"/>
+    <child  link="leftfinger"/>
+  </joint>
+
+  <joint name="connect-tip-rightfinger" type="fixed">
+    <parent link="tip"/>
+    <child  link="rightfinger"/>
+  </joint>
+
+  <link name="palm">
+    <visual>
+      <origin xyz="0 0 -0.025" rpy="0 0 0"/>
+      <geometry>
+	<box size="0.055 0.02 0.005"/>
+      </geometry>
+      <material name="blue"/>
+    </visual>
+  </link>
+
+  <link name="leftfinger">
+    <visual>
+      <origin xyz="0.025 0 0" rpy="0 0 0"/>
+      <geometry>
+	<box size="0.005 0.02 0.05"/>
+      </geometry>
+      <material name="blue"/>
+    </visual>
+  </link>
+
+  <link name="rightfinger">
+    <visual>
+      <origin xyz="-0.025 0 0" rpy="0 0 0"/>
+      <geometry>
+	<box size="0.005 0.02 0.05"/>
+      </geometry>
+      <material name="blue"/>
+    </visual>
+  </link>
+
+</robot>

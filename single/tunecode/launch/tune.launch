@@ -1,0 +1,7 @@
+<launch>
+  <!-- Start the HEBI node, with output on scree. -->
+  <node pkg="hebiros" type="hebiros_node" name="hebiros_node" output="screen"/>
+
+  <!-- Start the tuning code, with output on screen. -->
+  <node pkg="tunecode" type="tune.py" name="tune" output="screen"/>
+</launch>

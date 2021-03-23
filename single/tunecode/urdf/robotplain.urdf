@@ -1,0 +1,74 @@
+<?xml version="1.0"?>
+
+<robot name="robot">
+  
+  <!-- *************************************************** -->
+  <!-- ******************** Kinematics ******************* -->
+  <!-- *************************************************** -->
+  <!-- Note the 'origin' tag in the fixed joints defines the shift and
+       reorientation before the continuous joint rotates around the
+       axis.  For shift distances see below. -->
+
+  <link name="world"/>
+
+
+  <joint name="connect-world-motor0base" type="fixed">
+    <parent link="world"/>
+    <child  link="motor0base"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+
+  <link name="motor0base"/>
+
+  <joint name="Dwarfs/Doc" type="continuous">
+    <parent link="motor0base"/>
+    <child  link="motor0output"/>
+    <axis   xyz="0 0 1"/>
+  </joint>
+
+  <link name="motor0output"> </link>
+
+
+  <joint name="connect-motor0output-motor1base" type="fixed">
+    <parent link="motor0output"/>
+    <child  link="motor1base"/>
+    <origin xyz="0 0.05 0.081" rpy="1.57 0 0"/>
+  </joint>
+
+  <link name="motor1base"/>
+
+  <joint name="Dwarfs/Sleepy" type="continuous">
+    <parent link="motor1base"/>
+    <child  link="motor1output"/>
+    <axis   xyz="0 0 -1"/>
+  </joint>
+
+  <link name="motor1output"> </link>
+
+
+  <joint name="connect-motor1output-motor2base" type="fixed">
+    <parent link="motor1output"/>
+    <child  link="motor2base"/>
+    <origin xyz="0.5 0 0.036" rpy="0 0 0"/>
+  </joint>
+
+  <link name="motor2base"/>
+
+  <joint name="Dwarfs/Grumpy" type="continuous">
+    <parent link="motor2base"/>
+    <child  link="motor2output"/>
+    <axis   xyz="0 0 1"/>
+  </joint>
+
+  <link name="motor2output"> </link>
+
+
+  <joint name="connect-motor2output-tip" type="fixed">
+    <parent link="motor2output"/>
+    <child  link="tip"/>
+    <origin xyz="0.5 0 0.0335" rpy="0 1.57 0"/>
+  </joint>
+
+  <link name="tip"/>
+
+</robot>

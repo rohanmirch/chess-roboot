@@ -1,0 +1,3 @@
+float64[] position	# Array of joint positions
+---
+bool      success	# Indicate successful call
